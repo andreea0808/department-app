@@ -1,0 +1,88 @@
+spring-cloud-dataflow-server-local/target/spring-cloud-dataflow-server-local-1:
+  '0':
+    '0':
+      BUILD-SNAPSHOT:
+        jar: ''
+server:
+  port: '8082'
+  servlet:
+    context-path: /api
+
+spring:
+  profiles:
+    active: qa
+#  jackson:
+#    serialization:
+#      indent_output: 'true'
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/abcde
+    password:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: 'true'
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+welcome:
+  message: Welcome!!!
+
+---
+spring:
+  config:
+    activate:
+      on-profile: qa
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/abcde-qa
+    password:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: 'true'
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+welcome:
+  message: Welcome!!!from qa profile
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude:
+          - "env"
+          - "beans"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/abcde-prod
+    password:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: 'true'
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+welcome:
+  message: Welcome!!!from prod profile
+
